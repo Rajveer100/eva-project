@@ -1,89 +1,111 @@
 /*
- * Eva interpreter.
+ * Eva Interpreter
  */
 #include <iostream>
 #include <cassert>
 
-class Eva {
-
-  template<typename T>
-  bool isNumber(T exp);
-
-  template<typename T>
-  bool isString(T exp);
+/*
+ * Expr Node
+ *
+ * val - Simplest form of expression.
+ * subExpr - Complex expression that can be evaluated.
+ */
+template <typename T>
+struct Expr {
+  T val;
+  std::vector<Expr*> subExpr;
 
  public:
+  T getVal();
+  void setVal(T val);
 
-  template<typename T>
-  T eval(T exp);
+  std::vector<Expr<T>*> getSubExpr();
 
-  template<typename T>
-  T eval(std::vector<T> exp);
+  static bool isNumber(Expr<T>* expr);
+  static bool isString(Expr<T>* expr);
+
+  explicit Expr(T val, std::vector<Expr*> subExpr = {});
 };
 
+// Checks if the expression value is an integral type for self-evaluation.
 template<typename T>
-bool Eva::isNumber(T exp) {
+bool Expr<T>::isNumber(Expr<T>* expr) {
+  if (!expr->getSubExpr().empty())
+    return false;
   return std::is_integral<T>::value;
 }
 
+// Checks if the expression value is a string type for self-evaluation.
 template<typename T>
-bool Eva::isString(T exp) {
-  return std::is_same<decltype(exp), std::string>::value;
+bool Expr<T>::isString(Expr<T>* expr) {
+  if (!expr->getSubExpr().empty())
+    return false;
+  return std::is_same<decltype(expr->getVal()), std::string>::value;
 }
 
+// Get the value of the expression.
 template<typename T>
-T Eva::eval(T exp) {
-  try {
-    if (isNumber(exp)) {
-      return exp;
-    }
+T Expr<T>::getVal() {
+  return val;
+}
 
-    if (isString(exp)) {
-      return exp;
+// Set the value of the expression.
+template<typename T>
+void Expr<T>::setVal(T val) {
+  this->val = val;
+}
+
+// Get the sub expression for this expression.
+template<typename T>
+std::vector<Expr<T>*> Expr<T>::getSubExpr() {
+  return subExpr;
+}
+
+// Expr constructor with an optional parameter for sub expression.
+template<typename T>
+Expr<T>::Expr(T val, std::vector<Expr *> subExpr) {
+  this->val = val;
+  this->subExpr = subExpr;
+}
+
+class Eva {
+ public:
+
+  // Evaluates result for a complex expression.
+  template<typename T>
+  T eval(Expr<T>* expr);
+};
+
+// Recursively checks the simplest form of expression
+// for each complex expression and applys the binary operator
+// between to find the result.
+template<typename T>
+T Eva::eval(Expr<T>* expr) {
+  try {
+    if (Expr<T>::isNumber(expr))
+      return expr->getVal();
+    if (Expr<T>::isString(expr))
+      return expr->getVal();
+
+    if (!expr->getSubExpr().empty()) {
+      for (auto &x: expr->getSubExpr()) {
+
+      }
     }
-  } catch (const std::exception& e) {
-    std::cerr << "Unimplemented: " << e.what() << "\n";
+  } catch (...) {
+    std::cerr << "Unimplemented: " << expr << "\n";
   }
 }
 
-template<typename T>
-T Eva::eval(std::vector<T> exp) {
-  try {
-    if (exp[0] == "+") {
-      return std::to_string(
-              eval(std::stoi(exp[1])) + eval(std::stoi(exp[2]))
-              );
-    }
-
-    if (exp[0] == "-") {
-      return std::to_string(
-              eval(std::stoi(exp[1])) - eval(std::stoi(exp[2]))
-              );
-    }
-
-    if (exp[0] == "*") {
-      return std::to_string(
-              eval(std::stoi(exp[1])) * eval(std::stoi(exp[2]))
-              );
-    }
-
-    if (exp[0] == "/") {
-      return std::to_string(
-              eval(std::stoi(exp[1])) / eval(std::stoi(exp[2]))
-              );
-    }
-  } catch (const std::exception& e) {
-    std::cerr << "Unimplemented: " << e.what() << "\n";
-  }
-}
-
+// Temporary Tests
 int main() {
   Eva eva;
 
-  assert(eva.eval<int>(1) == 1);
-  assert(eva.eval<std::string>("1") == "1");
+  auto *numberExpr = new Expr<int>(1);
+  assert(eva.eval(numberExpr) == 1);
 
-  assert(eva.eval<std::string>({"*", "2", "3"}) == "6");
+  auto *stringExpr = new Expr<std::string>("1");
+  assert(eva.eval(stringExpr) == "1");
 
   std::cout << "All assertions passed!";
 }

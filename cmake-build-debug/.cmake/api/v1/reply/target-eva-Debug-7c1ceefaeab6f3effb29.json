@@ -10,7 +10,9 @@
 	{
 		"commands" : 
 		[
-			"add_executable"
+			"add_executable",
+			"add_definitions",
+			"include_directories"
 		],
 		"files" : 
 		[
@@ -24,7 +26,19 @@
 			{
 				"command" : 0,
 				"file" : 0,
-				"line" : 6,
+				"line" : 15,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 11,
+				"parent" : 0
+			},
+			{
+				"command" : 2,
+				"file" : 0,
+				"line" : 9,
 				"parent" : 0
 			}
 		]
@@ -38,6 +52,28 @@
 					"fragment" : "-g -std=gnu++20 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk -fcolor-diagnostics"
 				}
 			],
+			"defines" : 
+			[
+				{
+					"backtrace" : 2,
+					"define" : "__STDC_CONSTANT_MACROS"
+				},
+				{
+					"backtrace" : 2,
+					"define" : "__STDC_FORMAT_MACROS"
+				},
+				{
+					"backtrace" : 2,
+					"define" : "__STDC_LIMIT_MACROS"
+				}
+			],
+			"includes" : 
+			[
+				{
+					"backtrace" : 3,
+					"path" : "/opt/homebrew/Cellar/llvm/17.0.6/include"
+				}
+			],
 			"language" : "CXX",
 			"languageStandard" : 
 			{
@@ -49,7 +85,8 @@
 			},
 			"sourceIndexes" : 
 			[
-				0
+				0,
+				2
 			]
 		}
 	],
@@ -82,7 +119,15 @@
 			"name" : "Source Files",
 			"sourceIndexes" : 
 			[
-				0
+				0,
+				2
+			]
+		},
+		{
+			"name" : "Header Files",
+			"sourceIndexes" : 
+			[
+				1
 			]
 		}
 	],
@@ -92,6 +137,17 @@
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
 			"path" : "Eva.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"path" : "src/Eva.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "test.cpp",
 			"sourceGroupIndex" : 0
 		}
 	],

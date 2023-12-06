@@ -14,4 +14,6 @@ set(CMAKE_CXX_STANDARD 20)
 
 add_executable(eva Eva.cpp
         src/Eva.h
-        test.cpp)
+        test.cpp
+        src/parser/EvaParser.h
+        )

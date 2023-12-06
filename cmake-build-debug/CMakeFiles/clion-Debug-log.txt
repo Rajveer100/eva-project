@@ -2,5 +2,5 @@
 -- Found LLVM 17.0.6
 -- Using LLVMConfig.cmake in: /opt/homebrew/Cellar/llvm/17.0.6/lib/cmake/llvm
 -- Configuring done (0.1s)
--- Generating done (0.0s)
+-- Generating done (0.1s)
 -- Build files have been written to: /Users/rajveersingh/Desktop/CompilerDevelopment/eva-project/eva/cmake-build-debug

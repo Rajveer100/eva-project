@@ -9,7 +9,7 @@
 int main(int argc, char const *argv[]) {
   // Program to execute.
   std::string program = R"(
-    (printf "Value: %d" 42)
+    (printf "Value: %d\n" 42)
   )";
 
   // Compiler instance.

@@ -61,7 +61,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "eva::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-eva-Debug-0eb515a59525a4941f2b.json",
+					"jsonFile" : "target-eva-Debug-63ff3ccf9662b9d8edb7.json",
 					"name" : "eva",
 					"projectIndex" : 0
 				},
@@ -91,6 +91,6 @@
 	"version" : 
 	{
 		"major" : 2,
-		"minor" : 5
+		"minor" : 6
 	}
 }

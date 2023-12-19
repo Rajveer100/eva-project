@@ -351,7 +351,7 @@ class Tokenizer {
    * Lexical rules.
    */
   // clang-format off
-  static constexpr size_t LEX_RULES_COUNT = 7;
+  static constexpr size_t LEX_RULES_COUNT = 8;
   static std::array<LexRule, LEX_RULES_COUNT> lexRules_;
   static std::map<TokenizerState, std::vector<size_t>> lexRulesByStartConditions_;
   // clang-format on
@@ -421,10 +421,14 @@ return TokenType::__EMPTY;
 }
 
 inline TokenType _lexRule6(const Tokenizer& tokenizer, const std::string& yytext) {
-return TokenType::NUMBER;
+return TokenType::STRING;
 }
 
 inline TokenType _lexRule7(const Tokenizer& tokenizer, const std::string& yytext) {
+return TokenType::NUMBER;
+}
+
+inline TokenType _lexRule8(const Tokenizer& tokenizer, const std::string& yytext) {
 return TokenType::SYMBOL;
 }
 // clang-format on
@@ -439,10 +443,11 @@ std::array<LexRule, Tokenizer::LEX_RULES_COUNT> Tokenizer::lexRules_ = {{
   {std::regex(R"(^\/\/.*)"), &_lexRule3},
   {std::regex(R"(^\/\*[\s\S]*?\*\/)"), &_lexRule4},
   {std::regex(R"(^\s+)"), &_lexRule5},
-  {std::regex(R"(^"[^\"]*"\d+)"), &_lexRule6},
-  {std::regex(R"(^[\w\-+*=!<>/]+)"), &_lexRule7}
+  {std::regex(R"(^"[^\"]*")"), &_lexRule6},
+  {std::regex(R"(^\d+)"), &_lexRule7},
+  {std::regex(R"(^[\w\-+*=!<>/]+)"), &_lexRule8}
 }};
-std::map<TokenizerState, std::vector<size_t>> Tokenizer::lexRulesByStartConditions_ =  {{TokenizerState::INITIAL, {0, 1, 2, 3, 4, 5, 6}}};
+std::map<TokenizerState, std::vector<size_t>> Tokenizer::lexRulesByStartConditions_ =  {{TokenizerState::INITIAL, {0, 1, 2, 3, 4, 5, 6, 7}}};
 // clang-format on
 
 #endif

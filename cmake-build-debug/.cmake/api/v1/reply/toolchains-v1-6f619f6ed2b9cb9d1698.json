@@ -11,7 +11,7 @@
 					"includeDirectories" : 
 					[
 						"/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/15.0.0/include",
-						"/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk/usr/include",
+						"/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/include",
 						"/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include"
 					],
 					"linkDirectories" : [],
@@ -19,7 +19,7 @@
 					"linkLibraries" : []
 				},
 				"path" : "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc",
-				"version" : "15.0.0.15000040"
+				"version" : "15.0.0.15000100"
 			},
 			"language" : "C",
 			"sourceFileExtensions" : 
@@ -36,9 +36,9 @@
 				{
 					"includeDirectories" : 
 					[
-						"/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk/usr/include/c++/v1",
+						"/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/include/c++/v1",
 						"/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/15.0.0/include",
-						"/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.0.sdk/usr/include",
+						"/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/usr/include",
 						"/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include"
 					],
 					"linkDirectories" : [],
@@ -49,7 +49,7 @@
 					]
 				},
 				"path" : "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++",
-				"version" : "15.0.0.15000040"
+				"version" : "15.0.0.15000100"
 			},
 			"language" : "CXX",
 			"sourceFileExtensions" : 
@@ -64,7 +64,10 @@
 				"mpp",
 				"CPP",
 				"ixx",
-				"cppm"
+				"cppm",
+				"ccm",
+				"cxxm",
+				"c++m"
 			]
 		}
 	],

@@ -29,7 +29,7 @@ class Eva {
   // Executes a program.
   void exec(const std::string &program) {
     // 1. Parse the program:
-     auto ast = parser->parse(program);
+    auto ast = parser->parse(program);
 
     // 2. Compile to LLVM IR:
     compile(ast);
@@ -53,6 +53,8 @@ class Eva {
                         llvm::FunctionType::get(
                                 /* return type */ builder->getInt32Ty(), false));
 
+    createGlobalVar("VERSION", builder->getInt32(42));
+
     // 2. Compile main body.
     gen(ast);
 
@@ -66,13 +68,23 @@ class Eva {
         return builder->getInt32(expr.number);
       case ExprType::STRING: {
         // Unescape special characters. TODO: Support all characters or handle in parser.
-        auto re = std::regex("\\\n");
+        auto re = std::regex("\\\\n");
         auto str = std::regex_replace(expr.string, re, "\n");
-
         return builder->CreateGlobalStringPtr(str);
       }
       case ExprType::SYMBOL:
-        // TODO:
+        // Boolean
+        if (expr.string == "true" || expr.string == "false") {
+          return builder->getInt1(expr.string == "true");
+        } else {
+          // Variables
+
+          // TODO: Local Variables
+
+          // Global Variables
+          return module->getNamedGlobal(expr.string)->getInitializer();
+        }
+
         return builder->getInt32(0);
       case ExprType::LIST:
         auto tag = expr.list[0];
@@ -83,10 +95,18 @@ class Eva {
         if (tag.type == ExprType::SYMBOL) {
           auto op = tag.string;
 
-          // printf extern function:
-          //
-          // (printf "Value: %d" 42)
-          if (op == "printf") {
+          // Variable declaration: (var x (+ y 10))
+          if (op == "var") {
+            // TODO: Handle Generics
+
+            auto varName = expr.list[1].string;
+            // Inititaliser
+            auto init = gen(expr.list[2]);
+            return createGlobalVar(varName, (llvm::Constant*) init)->getInitializer();
+          } else if (op == "printf") {
+            // printf extern function:
+            //
+            // (printf "Value: %d" 42)
             auto printfFn = module->getFunction("printf");
             std::vector<llvm::Value*> args{};
 
@@ -101,6 +121,16 @@ class Eva {
 
     // Unreachable
     return builder->getInt32(0);
+  }
+
+  // Creates a global variable.
+  llvm::GlobalVariable* createGlobalVar(const std::string& name, llvm::Constant* init) {
+    module->getOrInsertGlobal(name, init->getType());
+    auto variable = module->getGlobalVariable(name);
+    variable->setAlignment(llvm::MaybeAlign(4));
+    variable->setConstant(false);
+    variable->setInitializer(init);
+    return variable;
   }
 
   // Define external functions (from libc++)

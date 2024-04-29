@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.26)
+cmake_minimum_required(VERSION 3.27)
 project(eva)
 
 find_package(LLVM REQUIRED CONFIG)
@@ -10,10 +10,12 @@ include_directories(${LLVM_INCLUDE_DIRS})
 separate_arguments(LLVM_DEFINITIONS_LIST NATIVE_COMMAND ${LLVM_DEFINITIONS})
 add_definitions(${LLVM_DEFINITIONS_LIST})
 
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 23)
 
 add_executable(eva Eva.cpp
         src/Eva.h
         test.cpp
         src/parser/EvaParser.h
-        )
+        src/Environment.h
+        src/Logger.h
+)
